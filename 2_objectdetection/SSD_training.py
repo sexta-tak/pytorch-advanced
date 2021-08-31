@@ -122,6 +122,7 @@ def train_model(net, dataloaders_dict, criterion, optimizer, num_epochs):
                             t_iter_finish = time.time()
                             duration = t_iter_finish - t_iter_start
                             print("iteration {} || Loss: {:.4f} || 10iter: {:.4f} sec.".format(iteration, loss.item(), duration))
+                            t_iter_start = time.time()
 
                         epoch_train_loss += loss.item()
                         iteration += 1
@@ -132,7 +133,7 @@ def train_model(net, dataloaders_dict, criterion, optimizer, num_epochs):
             t_epoch_finish = time.time()
             print("---------------")
             print("epoch {} || Epoch_Train_Loss:{:.4f} || Epoch_Val_Loss:{:.4f}".format(epoch+1, epoch_train_loss, epoch_val_loss))
-            print("timer: {;.4f} sec.".format(t_epoch_finish - t_epoch_start))
+            print("timer: {:.4f} sec.".format(t_epoch_finish - t_epoch_start))
             t_epoch_start = time.time()
 
             log_epoch = {"epoch": epoch+1, "train_loss": epoch_train_loss, "val_loss": epoch_val_loss}

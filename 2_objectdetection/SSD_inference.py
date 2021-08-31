@@ -23,8 +23,8 @@ ssd_cfg = {
 }
 
 net = SSD(phase="inference", cfg=ssd_cfg)
-# net_weights = torch.load("./weights/ssd300_50.pth", map_location={"cuda":"cpu"})
-net_weights = torch.load('./weights/ssd300_mAP_77.43_v2.pth', map_location={'cuda:0': 'cpu'})
+net_weights = torch.load("./weights/ssd300_250.pth", map_location={"cuda":"cpu"})
+# net_weights = torch.load('./weights/ssd300_mAP_77.43_v2.pth', map_location={'cuda:0': 'cpu'})
 net.load_state_dict(net_weights)
 print("complete loading")
 
