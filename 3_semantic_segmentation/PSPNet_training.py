@@ -83,10 +83,14 @@ def train_model(net, dataloaders_dict, criterion, scheduler, optimizer, num_epoc
     iteration = 1
     logs = []
 <<<<<<< HEAD
+<<<<<<< HEAD
     batch_multiplier = 3
 =======
     batch_multipler = 3
 >>>>>>> b18dbf5b0d7f37f85bdb5540307bdc9894b024b9
+=======
+    batch_multiplier = 3
+>>>>>>> 6c3f6b00a339db64a675258983573a74358fbdbb
 
     for epoch in range(num_epochs):
         t_epoch_start = time.time()
@@ -123,10 +127,14 @@ def train_model(net, dataloaders_dict, criterion, scheduler, optimizer, num_epoc
                 if (phase == "train") and (count == 0):
                     optimizer.step()
 <<<<<<< HEAD
+<<<<<<< HEAD
                     optimizer.zero_grad()
 =======
                     oprimizer.zero_grad()
 >>>>>>> b18dbf5b0d7f37f85bdb5540307bdc9894b024b9
+=======
+                    optimizer.zero_grad()
+>>>>>>> 6c3f6b00a339db64a675258983573a74358fbdbb
                     count = batch_multiplier
 
                 with torch.set_grad_enabled(phase == "train"):
@@ -160,10 +168,14 @@ def train_model(net, dataloaders_dict, criterion, scheduler, optimizer, num_epoc
 
         if (epoch+1)%30 == 0:
 <<<<<<< HEAD
+<<<<<<< HEAD
             torch.save(net.state_dict(), 'weights/pspnet50_' + str(epoch+1) + '.pth')
 =======
             torch.save(net.state_dict(), "wights/pspnet50_" + str(epoch+1) + ".pth")
 >>>>>>> b18dbf5b0d7f37f85bdb5540307bdc9894b024b9
+=======
+            torch.save(net.state_dict(), 'weights/pspnet50_' + str(epoch+1) + '.pth')
+>>>>>>> 6c3f6b00a339db64a675258983573a74358fbdbb
 
 num_epochs = 150
 train_model(net, dataloaders_dict, criterion, scheduler, optimizer, num_epochs=num_epochs)
