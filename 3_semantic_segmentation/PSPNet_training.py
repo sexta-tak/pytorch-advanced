@@ -118,11 +118,7 @@ def train_model(net, dataloaders_dict, criterion, scheduler, optimizer, num_epoc
 
                 if (phase == "train") and (count == 0):
                     optimizer.step()
-<<<<<<< HEAD
                     optimizer.zero_grad()
-=======
-                    oprimizer.zero_grad()
->>>>>>> b18dbf5b0d7f37f85bdb5540307bdc9894b024b9
                     count = batch_multiplier
 
                 with torch.set_grad_enabled(phase == "train"):
@@ -155,11 +151,9 @@ def train_model(net, dataloaders_dict, criterion, scheduler, optimizer, num_epoc
         df.to_csv("log_output.csv")
 
         if (epoch+1)%30 == 0:
-<<<<<<< HEAD
-            torch.save(net.state_dict(), 'weights/pspnet50_' + str(epoch+1) + '.pth')
-=======
-            torch.save(net.state_dict(), "wights/pspnet50_" + str(epoch+1) + ".pth")
->>>>>>> b18dbf5b0d7f37f85bdb5540307bdc9894b024b9
+            torch.save(net.state_dict(), "weights/pspnet50_" + str(epoch+1) + ".pth")
+
+
 
 num_epochs = 150
 train_model(net, dataloaders_dict, criterion, scheduler, optimizer, num_epochs=num_epochs)
