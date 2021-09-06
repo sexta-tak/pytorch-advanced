@@ -82,11 +82,7 @@ def train_model(net, dataloaders_dict, criterion, scheduler, optimizer, num_epoc
 
     iteration = 1
     logs = []
-<<<<<<< HEAD
     batch_multiplier = 3
-=======
-    batch_multipler = 3
->>>>>>> b18dbf5b0d7f37f85bdb5540307bdc9894b024b9
 
     for epoch in range(num_epochs):
         t_epoch_start = time.time()
