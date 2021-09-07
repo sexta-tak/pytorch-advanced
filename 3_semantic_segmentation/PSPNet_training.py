@@ -36,7 +36,14 @@ dataloaders_dict = {"train": train_dataloader, "val": val_dataloader}
 # %%
 from utils.pspnet import PSPNet
 
+# net = PSPNet(n_classes=150)
+# state_dict = torch.load("./weights/pspnet50_ADE20K.pth")
+# net.load_state_dict(state_dict)
 net = PSPNet(n_classes=21)
+
+# n_classes = 21
+# net.decode_feature.classification = nn.Conv2d(in_channels=512, out_channels=n_classes, kernel_size=1, stride=1, padding=0)
+# net.aux.classification = nn.Conv2d(in_channels=256, out_channels=n_classes, kernel_size=1, stride=1, padding=1)
 
 def weights_init(m):
     if isinstance(m, nn.Conv2d):
@@ -44,6 +51,8 @@ def weights_init(m):
         if m.bias is not None:
             nn.init.constant_(m.bias, 0.0)
 
+# net.decode_feature.classification.apply(weights_init)
+# net.aux.classification.apply(weights_init)
 net.apply(weights_init)
 print(net)
 
@@ -61,9 +70,19 @@ class PSPLoss(nn.Module):
 
 criterion = PSPLoss(aux_weight=0.4)
 optimizer = optim.SGD(net.parameters(), lr=1e-3, momentum=0.9, weight_decay=0.0001)
+# optimizer = optim.SGD([
+#     {'params': net.feature_conv.parameters(), 'lr': 1e-3},
+#     {'params': net.feature_res_1.parameters(), 'lr': 1e-3},
+#     {'params': net.feature_res_2.parameters(), 'lr': 1e-3},
+#     {'params': net.feature_dilated_res_1.parameters(), 'lr': 1e-3},
+#     {'params': net.feature_dilated_res_2.parameters(), 'lr': 1e-3},
+#     {'params': net.pyramid_pooling.parameters(), 'lr': 1e-3},
+#     {'params': net.decode_feature.parameters(), 'lr': 1e-2},
+#     {'params': net.aux.parameters(), 'lr': 1e-2},
+# ], momentum=0.9, weight_decay=0.0001)
 
 def lambda_epoch(epoch):
-    max_epoch = 150
+    max_epoch = 500
     return math.pow((1-epoch/max_epoch), 0.9)
 
 scheduler = optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lambda_epoch)
@@ -150,12 +169,15 @@ def train_model(net, dataloaders_dict, criterion, scheduler, optimizer, num_epoc
         df = pd.DataFrame(logs)
         df.to_csv("log_output.csv")
 
-        if (epoch+1)%30 == 0:
+        if (epoch+1)%50 == 0:
             torch.save(net.state_dict(), "weights/pspnet50_" + str(epoch+1) + ".pth")
 
 
 
-num_epochs = 150
+num_epochs = 500
+start = time.time()
 train_model(net, dataloaders_dict, criterion, scheduler, optimizer, num_epochs=num_epochs)
+end = time.time() - start
+print("Time: {:.4f} .sec".format(end))
 
 # %%
