@@ -13,7 +13,7 @@ from utils.pspnet import PSPNet
 
 net = PSPNet(n_classes=21)
 
-state_dict = torch.load("./weights/pspnet50_150.pth", map_location={"cuda":"cpu"})
+state_dict = torch.load("./weights/pspnet50_30_fine.pth", map_location={"cuda":"cpu"})
 net.load_state_dict(state_dict)
 
 # %%
